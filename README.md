@@ -7,10 +7,11 @@ This repo assumes general knowledge about Terraform for AWS, if not, please get 
 # Null provider
 Null provider (original documentation can be found here: https://www.terraform.io/docs/providers/null/index.html ) in Terraform is a special case. By itself it does nothing except to have the same lifecycle as other providers. But it can be used as a workaround for some tricky situation and help to orchestrate stuff.
 > Note: Usage of null provider can make configuration less readable. Apply with care.
-This repo contains demonstration code for the Null provider usage with count
+
+This repo contains demonstration code for the specific case of Null provider usage with meta-argument [count](https://www.terraform.io/docs/configuration/resources.html#count-multiple-resource-instances-by-count) of Terrafom resource.
 To read more in details with description of parameters check also [this link](https://github.com/Galser/tf-null-provider)
 
-- We going to demo usage of meta-argument [count](https://www.terraform.io/docs/configuration/resources.html#count-multiple-resource-instances-by-count) in conjunction with null provider. And in this case null provider (**null_resource**) is going to be used exactly as wrapper that executes local-exec to output public IP of every host.  Start by creating file [main1.tf](main1.tf) with the following content :
+- We going to demo usage of **count** and **count.index** in conjunction with null provider. And in this case null provider (**null_resource**) is going to be used exactly as wrapper that executes local-exec to output public IP of every host into a text-file.  Start by creating file [main.tf](main1.tf) with the following content :
     ```terraform
     # Null provider example
     variable "num_instances" {
@@ -49,7 +50,7 @@ To read more in details with description of parameters check also [this link](ht
     ```
     terraform.apply
     ```
-- Output going to end up with something similar to : 
+- Output going to look similar to : 
     ```
     aws_instance.futureweb[0]: Creating...
     aws_instance.futureweb[1]: Creating...
@@ -69,12 +70,13 @@ To read more in details with description of parameters check also [this link](ht
     18.185.249.47
     18.197.226.19
     ```
-- This concludes the section. Don not forget to free-up resource, when they do not needed anymore, by running : 
+    Sucess!
+-  Do not forget to free-up resource, when they do not needed anymore, by running : 
     ```
     terraform destroy
     ```
     And replying `yes` to the question
-
+This concludes the section.
 
 # Todo
 
